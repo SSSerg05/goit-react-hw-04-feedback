@@ -8,6 +8,6 @@ export const Container = styled.div`
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    fontSize: 40;
+    font-size: 40;
     color: #010101;
   `;
