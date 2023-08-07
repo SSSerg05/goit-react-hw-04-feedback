@@ -20,10 +20,54 @@ const showMessage = (keyOption) => {
 
 
 
-const [positive, funcPositive] = useState();
-const [neutral, funcNeutral] = useState();
-const [negative, funcNegative] = useState(); 
+export function Counter() {
 
+  const [positive, setPositive] = useState(0);
+  const handleCounterPositiveIncrement = () => { 
+    setPositive(prevCounterPositive => prevCounterPositive + 1);  
+  }
+
+  const [neutral, setNeutral] = useState(0);
+  const handleCounterNeutralIncrement = () => { 
+    setNeutral(prevCounterNeutral => prevCounterNeutral + 1);  
+  }
+
+  const [negative, setNegative] = useState(0); 
+  const handleCounterNegativeIncrement = () => { 
+    setNegative(prevCounterNegative => prevCounterNegative + 1);  
+  }
+
+ const countTotalFeedback = () => { 
+     return Object.values(this.state).reduce((acc, item) => acc + item, 0)
+ } 
+
+  const total = countTotalFeedback();
+  // const { positive, neutral, negative } = this.state;
+
+  return (
+      <>
+        <Section title={"Please leave feedback"}>
+          <FeedbackOptions
+            options={Object.keys(this.state)} 
+            onLeaveFeedback={handleCounterPositiveIncrement}
+          />
+        </Section>
+
+        <Section title={"Statistics"}>
+          {
+            total ? <Statistics 
+                      positive = {positive}
+                      neutral = {neutral}
+                      negative = {negative}
+                      total = {total} 
+                      positivePercentage = {this.countPositiveFeedbackPercentage()}
+                    />
+                  : <Notification message="There is no feedback" />
+          }
+        </Section>
+      </>
+  );
+}
 
 // export class Counter extends Component {
   
