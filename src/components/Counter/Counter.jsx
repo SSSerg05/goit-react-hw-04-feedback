@@ -68,7 +68,7 @@ const countPositiveFeedbackPercentage = () => {
      return 0;
   }
 
-  return (positive / countTotalFeedback());
+  return ((positive / countTotalFeedback()  * 100).toFixed(0));
 }
   
   
