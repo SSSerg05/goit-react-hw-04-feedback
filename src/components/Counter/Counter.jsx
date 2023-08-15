@@ -8,20 +8,9 @@ import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
 
 
-const showMessage = (keyOption) => {
-    const message = "You leave " + keyOption + " feedback";
-    const obj = {
-      positive: Notiflix.Notify.success,
-      neutral: Notiflix.Notify.info,
-      negative: Notiflix.Notify.warning,
-    } 
-    obj[keyOption](message);
-}
-
-
-
 export function Counter() {
-
+  
+  // create State and use fuctions
   const [positive, setPositive] = useState(0);
   const handleCounterPositiveIncrement = () => { 
     setPositive(prevCounterPositive => prevCounterPositive + 1);  
@@ -37,19 +26,61 @@ export function Counter() {
     setNegative(prevCounterNegative => prevCounterNegative + 1);  
   }
 
- const countTotalFeedback = () => { 
-     return Object.values(this.state).reduce((acc, item) => acc + item, 0)
- } 
 
-  const total = countTotalFeedback();
-  // const { positive, neutral, negative } = this.state;
+  // increment State
+  const handleCounterIncrement = (activeState) => {
+    const state = {
+      positive: handleCounterPositiveIncrement,
+      neutral: handleCounterNeutralIncrement,
+      negative: handleCounterNegativeIncrement,
+    }
+
+    for (let item of Object.keys(state)) {
+      if (activeState === item) {
+        state[item]();
+        showMessage(activeState);
+      }
+    }
+  }
+
+  
+  // Calc total feedback
+  const countTotalFeedback = () => { 
+   return positive + neutral + negative;
+   //Object.values(state).reduce((acc, item) => acc + item, 0)
+  } 
+
+  
+  
+const showMessage = (keyOption) => {
+  const message = "You leave " + keyOption + " feedback";
+  const obj = {
+    positive: Notiflix.Notify.success,
+    neutral: Notiflix.Notify.info,
+    negative: Notiflix.Notify.warning,
+  } 
+  obj[keyOption](message);
+}
+
+  
+const countPositiveFeedbackPercentage = () => { 
+  if (!total) {
+     return 0;
+  }
+
+  return (positive / countTotalFeedback());
+}
+  
+  
+const total = countTotalFeedback();
+const state = { positive, neutral, negative };
 
   return (
       <>
         <Section title={"Please leave feedback"}>
           <FeedbackOptions
-            options={Object.keys(this.state)} 
-            onLeaveFeedback={handleCounterPositiveIncrement}
+            options={Object.keys(state)} 
+            onLeaveFeedback={handleCounterIncrement}
           />
         </Section>
 
@@ -60,7 +91,7 @@ export function Counter() {
                       neutral = {neutral}
                       negative = {negative}
                       total = {total} 
-                      positivePercentage = {this.countPositiveFeedbackPercentage()}
+                      positivePercentage = {countPositiveFeedbackPercentage()}
                     />
                   : <Notification message="There is no feedback" />
           }
