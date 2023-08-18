@@ -10,34 +10,36 @@ import { Notification } from './Notification/Notification';
 
 export function Counter() {
   
-  // create State and use fuctions
+  // create useState
   const [positive, setPositive] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [negative, setNegative] = useState(0); 
+  
+  // functions for increment data
   const handleCounterPositiveIncrement = () => { 
     setPositive(prevCounterPositive => prevCounterPositive + 1);  
   }
-
-  const [neutral, setNeutral] = useState(0);
+  
   const handleCounterNeutralIncrement = () => { 
     setNeutral(prevCounterNeutral => prevCounterNeutral + 1);  
   }
 
-  const [negative, setNegative] = useState(0); 
   const handleCounterNegativeIncrement = () => { 
     setNegative(prevCounterNegative => prevCounterNegative + 1);  
   }
 
 
-  // increment State
+  // run callback increment function for selected state
   const handleCounterIncrement = (activeState) => {
-    const state = {
+    const objState = {
       positive: handleCounterPositiveIncrement,
       neutral: handleCounterNeutralIncrement,
       negative: handleCounterNegativeIncrement,
     }
 
-    for (let item of Object.keys(state)) {
+    for (let item of Object.keys(objState)) {
       if (activeState === item) {
-        state[item]();
+        objState[item]();
         showMessage(activeState);
       }
     }
@@ -77,7 +79,7 @@ const state = { positive, neutral, negative };
 
   return (
       <>
-        <Section title={"Please leave feedback"}>
+        <Section title={"Please leave feedback: HW4-Hook"}>
           <FeedbackOptions
             options={Object.keys(state)} 
             onLeaveFeedback={handleCounterIncrement}
