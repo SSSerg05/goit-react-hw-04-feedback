@@ -31,6 +31,10 @@ export function Counter() {
 
   // run callback increment function for selected state
   const handleCounterIncrement = (activeState) => {
+    if (!activeState) { 
+      return
+    }
+    
     const objState = {
       positive: handleCounterPositiveIncrement,
       neutral: handleCounterNeutralIncrement,
