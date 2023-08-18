@@ -37,12 +37,15 @@ export function Counter() {
       negative: handleCounterNegativeIncrement,
     }
 
-    for (let item of Object.keys(objState)) {
-      if (activeState === item) {
-        objState[item]();
-        showMessage(activeState);
-      }
-    }
+    objState[activeState]();
+    showMessage(activeState);
+
+    // for (let item of Object.keys(objState)) {
+    //   if (activeState === item) {
+    //     objState[item]();
+    //     showMessage(activeState);
+    //   }
+    // }
   }
 
   
